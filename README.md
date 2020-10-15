@@ -1,5 +1,14 @@
 # Google Coral USB Accelerator performance with Raspberry Pi 3B, 3A+ & 4B
 
+<p align="left">
+Read the article: <a href='https://helloworld.co.in/article/google-coral-usb-accelerator-performance-raspberry-pi-3b-3a-4b' target='_blank'>
+   <img src='https://github.com/jiteshsaini/earthrover1/blob/master/img/logo3.gif' height='40px'>
+</a> Watch the video on Yotube: 
+<a href='https://youtu.be/mZLTtmPGyq0' target='_blank'>
+   <img src='https://github.com/jiteshsaini/earthrover1/blob/master/img/btn_youtube.png' height='40px'>
+</a>
+</p>
+
 This is an experiment to assess the performance of 4 models of Raspberry Pi while running a Machine Learning Model (MobileNet V1) to perform image classification with and without Coral USB accelerator.
 
 ## The approach
