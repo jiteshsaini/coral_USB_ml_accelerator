@@ -32,7 +32,7 @@ There 02 Python files, 02 pre-trained model files and 01 label file present in t
 The picture below shows the setup which is used in the experiment.
 
 <p align="center">
-   <img src="https://helloworld.co.in/sites/default/files/inline-images/setup.001.jpeg">
+   <img src="https://helloworld.co.in/sites/default/files/inline-images/coral-usb-accelerator-raspberry-pi-performance.jpeg">
 </p>
 
 ## The Results
@@ -40,7 +40,7 @@ The picture below shows the setup which is used in the experiment.
 Results of the experiment are summarised in the graph below.
 
 <p align="center">
-   <img src="https://helloworld.co.in/sites/default/files/inline-images/results.jpg">
+   <img src="https://helloworld.co.in/sites/default/files/inline-images/raspberry-pi-coral-usb-accelerator-performance-results.jpg">
 </p>
 
 
