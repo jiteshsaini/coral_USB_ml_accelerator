@@ -2,10 +2,10 @@
 
 <p align="left">
 Read the article: <a href='https://helloworld.co.in/article/google-coral-usb-accelerator-performance-raspberry-pi-3b-3a-4b' target='_blank'>
-   <img src='https://github.com/jiteshsaini/earthrover1/blob/master/img/logo3.gif' height='40px'>
+   <img src='https://github.com/jiteshsaini/files/blob/main/img/logo3.gif' height='40px'>
 </a> Watch the video on Yotube: 
 <a href='https://youtu.be/mZLTtmPGyq0' target='_blank'>
-   <img src='https://github.com/jiteshsaini/earthrover1/blob/master/img/btn_youtube.png' height='40px'>
+   <img src='https://github.com/jiteshsaini/files/blob/main/img/btn_youtube.png' height='40px'>
 </a>
 </p>
 
