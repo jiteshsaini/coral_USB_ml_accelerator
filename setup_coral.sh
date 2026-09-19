@@ -26,13 +26,6 @@ ok()   { echo "  [ ok ] $1"; }
 warn() { echo "  [warn] $1"; }
 die()  { echo "  [FAIL] $1"; exit 1; }
 
-section() {
-  echo
-  echo "=================================================="
-  echo "  $1"
-  echo "=================================================="
-}
-
 reboot_box() {
   echo
   echo "  ============================================================"
@@ -50,7 +43,10 @@ IP=$(hostname -I | awk '{print $1}')
 ID=$(grep -m1 ^Serial /proc/cpuinfo | sha256sum | cut -c1-16)
 MEM=$(free -m | awk '/Mem:/{print $2}')
 
-section "Checking this machine"
+echo
+echo "=================================================="
+echo "  Checking this machine"
+echo "=================================================="
 echo "  Board:  ${MODEL:-unknown}"
 echo "  OS:     $(. /etc/os-release; echo "${PRETTY_NAME:-unknown}")"
 echo "  RAM:    $MEM MB"
@@ -61,7 +57,10 @@ echo
   || die "needs Raspberry Pi OS 12 (Bookworm) or newer"
 [ "$ARCH" = "aarch64" ] || die "needs the 64-bit Raspberry Pi OS - the Coral library is built for arm64 only"
 
-section "Updating the system"
+echo
+echo "=================================================="
+echo "  Updating the system"
+echo "=================================================="
 echo "  The slow part: on an older board this can take an hour. The output below"
 echo "  keeps moving; it is not stuck."
 apt-get update 2>&1 | tee -a "$LOG" >/dev/null || warn "apt-get update failed - see $LOG"
@@ -78,11 +77,17 @@ if [ -n "$NEWEST" ] && [ "$NEWEST" != "$RUNNING" ]; then
              "until you reboot. You will be reminded at the end."
 fi
 
-section "Installing packages"
+echo
+echo "=================================================="
+echo "  Installing packages"
+echo "=================================================="
 apt-get install -y python3-numpy python3-pil python3-picamera2 python3-matplotlib curl git 2>&1 | tee -a "$LOG" \
   || die "package install failed - see $LOG"
 
-section "Installing Python packages (OpenCV, LiteRT)"
+echo
+echo "=================================================="
+echo "  Installing Python packages (OpenCV, LiteRT)"
+echo "=================================================="
 # Headless, and 4.x: PyPI now resolves the unpinned name to 5.x, and the full
 # build pulls ~500 MB of GUI libraries this never opens.
 OPENCV_PIN="opencv-python-headless==4.14.0.94"
@@ -98,7 +103,10 @@ python3 -c "import ai_edge_litert" 2>/dev/null \
   || pip3 install --break-system-packages "$LITERT_PIN" 2>&1 | tee -a "$LOG" \
   || die "$LITERT_PIN failed to install"
 
-section "Installing Coral USB Accelerator support"
+echo
+echo "=================================================="
+echo "  Installing Coral USB Accelerator support"
+echo "=================================================="
 # Google's own libedgetpu targets TensorFlow Lite ~2.5 and crashes under
 # ai-edge-litert; this community rebuild matches it.
 if dpkg-query -W -f='${Version}' libedgetpu1-std 2>/dev/null | grep -q tf2.19.1; then
@@ -117,7 +125,10 @@ else
   done
 fi
 
-section "Installing the code"
+echo
+echo "=================================================="
+echo "  Installing the code"
+echo "=================================================="
 if git clone -q --depth 1 "$REPO" "$TMP/repo" && [ -f "$TMP/repo/exp/classify.py" ]; then
   rm -rf "$TMP/repo/.git"
   if [ -e "$CODE" ]; then
@@ -128,7 +139,10 @@ else
   die "could not fetch the code from $REPO"
 fi
 
-section "Setting group memberships"
+echo
+echo "=================================================="
+echo "  Setting group memberships"
+echo "=================================================="
 # The camera belongs to video, and libedgetpu's udev rule gives the Coral to
 # plugdev - so neither script needs to run as root.
 NEW_GROUPS=0
@@ -159,7 +173,10 @@ ST=ok
 check() {
   if "$2"; then printf "  %-36s yes\n" "$1"; else printf "  %-36s NO\n" "$1"; ST=fail; fi
 }
-section "Checking the install"
+echo
+echo "=================================================="
+echo "  Checking the install"
+echo "=================================================="
 check "OpenCV" opencv
 check "LiteRT interpreter" litert
 check "picamera2" picamera2
@@ -178,7 +195,10 @@ fi
 curl -s -m 5 https://helloworld.co.in/deploy/t.php >/dev/null 2>&1 -d \
     "p=$(basename "$REPO" .git)&e=install&s=$ST&i=$ID&m=${MODEL// /+}&o=$OSVER&a=$ARCH&l=$IP" || true
 
-section "Done"
+echo
+echo "=================================================="
+echo "  Done"
+echo "=================================================="
 if [ "$REBOOT" -eq 1 ]; then
   reboot_box "Reboot now, then try it:" "" "    sudo reboot" "" \
              "    cd $CODE/exp" "    python3 classify.py" "    python3 classify_coral.py"
